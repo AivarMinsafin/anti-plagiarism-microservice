@@ -63,9 +63,20 @@ public class FileStorageUtil {
         return fileName;
     }
 
-    public Resource loadFileAsResource(String pathFromRootDir){
+    public Resource loadFileAsResource(String path, String type){
+        Path storagePath;
+        switch (type){
+            case "archive":
+                storagePath = archiveStoragePath;
+                break;
+            case "report":
+                storagePath = reportStoragePath;
+                break;
+            default:
+                throw new FileStorageException("Wrong file type");
+        }
         try {
-            Path filePath = this.rootStoragePath.resolve(pathFromRootDir).normalize();
+            Path filePath = storagePath.resolve(path).normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists()){
                 return resource;
