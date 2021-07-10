@@ -1,0 +1,13 @@
+POST http://localhost:8080/api/plagiarism/addTask
+Content-Type: application/json
+
+{
+  "firstName": "Ivan",
+  "lastName": "Ivanov",
+  "studentId": 1,
+  "email": "ivanov@mail.ru",
+  "themeId": 1,
+  "themeName": "OOP"
+}
+
+###
