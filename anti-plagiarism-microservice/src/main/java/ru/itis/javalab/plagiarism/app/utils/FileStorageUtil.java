@@ -1,5 +1,6 @@
 package ru.itis.javalab.plagiarism.app.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ public class FileStorageUtil {
     private final Path reportStoragePath;
     private final Path rootStoragePath;
 
+    @Autowired
     public FileStorageUtil(FileStorageProperties fileStorageProperties){
         this.archiveStoragePath = Paths.get(fileStorageProperties.getUploadDir().get("archive")).toAbsolutePath().normalize();
         this.reportStoragePath = Paths.get(fileStorageProperties.getUploadDir().get("report")).toAbsolutePath().normalize();
