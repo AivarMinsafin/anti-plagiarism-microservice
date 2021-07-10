@@ -21,17 +21,12 @@ public class FileStorageUtil {
 
     private final Path archiveStoragePath;
     private final Path reportStoragePath;
-    private final Path rootStoragePath;
 
     @Autowired
     public FileStorageUtil(FileStorageProperties fileStorageProperties){
         this.archiveStoragePath = Paths.get(fileStorageProperties.getUploadDir().get("archive")).toAbsolutePath().normalize();
         this.reportStoragePath = Paths.get(fileStorageProperties.getUploadDir().get("report")).toAbsolutePath().normalize();
-        this.rootStoragePath = Paths.get(fileStorageProperties.getUploadDir().get("root")).toAbsolutePath().normalize();
         try {
-            if (!Files.exists(rootStoragePath)){
-                Files.createDirectories(rootStoragePath);
-            }
             if (!Files.exists(archiveStoragePath)){
                 Files.createDirectories(archiveStoragePath);
             }
