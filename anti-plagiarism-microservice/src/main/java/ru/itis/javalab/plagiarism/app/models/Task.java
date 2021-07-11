@@ -24,6 +24,7 @@ public class Task {
     @JoinColumn(name = "student_id")
     private Student student;
     private String archivePath;
+    private String projectPath;
     private LocalDateTime localDateTime;
 
 }
