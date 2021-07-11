@@ -1,13 +1,17 @@
 package ru.itis.javalab.plagiarism.app.services;
 
+import com.google.common.io.Files;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.itis.javalab.plagiarism.app.dto.form.AddTaskForm;
 import ru.itis.javalab.plagiarism.app.models.Student;
 import ru.itis.javalab.plagiarism.app.models.Task;
 import ru.itis.javalab.plagiarism.app.repositories.StudentRepository;
 import ru.itis.javalab.plagiarism.app.repositories.TaskRepository;
+import ru.itis.javalab.plagiarism.app.utils.FileStorageUtil;
 
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -19,6 +23,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private FileStorageUtil fileStorageUtil;
 
     @Override
     public void addTask(AddTaskForm form) {
@@ -36,7 +43,9 @@ public class TaskServiceImpl implements TaskService {
             taskRepository.delete(task);
         }
         task = Task.builder()
-                //.archivePath(form.getArchive())
+                .archivePath(
+                        storeArchive(form.getArchive(), form.getFirstName(), form.getLastName(), form.getThemeId())
+                )
                 .localDateTime(LocalDateTime.now())
                 .themeId(form.getThemeId())
                 .themeName(form.getThemeName())
@@ -44,5 +53,13 @@ public class TaskServiceImpl implements TaskService {
                 .build();
         studentRepository.save(student);
         taskRepository.save(task);
+    }
+
+    private String storeArchive(MultipartFile file, String firstName, String lastName, Long themeId){
+        String path = themeId.toString();
+        String fileName = firstName+"_"+lastName+"_"+themeId;
+        String fileExt = Files.getFileExtension(file.getOriginalFilename());
+        fileStorageUtil.storeArchive(file, path, fileName, fileExt);
+        return Paths.get(path).resolve(fileName+"."+fileExt).toString();
     }
 }
