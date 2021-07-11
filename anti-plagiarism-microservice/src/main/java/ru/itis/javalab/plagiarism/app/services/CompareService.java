@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Map;
 
 public interface CompareService {
-    Map<String, String> getSimilarityForStudentWithIdAndThemeId(String themeName, String rootDir);
+    Map<String, String> getSimilarityForStudentWithIdAndThemeId(Long studentId, Long themeId);
 }

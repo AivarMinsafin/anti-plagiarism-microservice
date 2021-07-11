@@ -18,7 +18,7 @@ public class CompareController {
 
     @PostMapping("/api/plagiarism/getResult")
     public ResponseEntity<Map<String, String>> getResult(@RequestBody GetResultForm form) {
-        Map<String, String> map = compareService.compare(form.getThemeName(), form.getRootDir());
+        Map<String, String> map = compareService.getSimilarityForStudentWithIdAndThemeId(form.getStudentId(), form.getThemeId());
         return ResponseEntity.ok(map);
     }
 }

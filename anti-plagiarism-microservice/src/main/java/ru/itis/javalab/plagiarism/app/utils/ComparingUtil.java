@@ -25,26 +25,22 @@ public class ComparingUtil {
         projectStoragePath = Paths.get(fileStorageProperties.getUploadDir().get("project"));
     }
 
-    public List<JPlagComparison> compareList() {
-
+    public List<JPlagComparison> compareList(String BaseStudentProjectName) {
+        JPlagOptions options = new JPlagOptions(projectStoragePath.toAbsolutePath().toString(), LanguageOption.JAVA_1_9);
+        options.setBaseCodeSubmissionName(BaseStudentProjectName);
+        JPlag jplag;
+        JPlagResult result;
+        List<JPlagComparison> comparisons = null;
+        try {
+            jplag = new JPlag(options);
+            result = jplag.run();
+        } catch (ExitException e) {
+            throw new IllegalStateException(e);
+        }
+        if (result != null) {
+            comparisons = result.getComparisons();
+        }
+        return comparisons;
     }
-
-//    public List<JPlagComparison> compareList() {
-//        JPlagOptions options = new JPlagOptions(rootDir, LanguageOption.JAVA_1_9);
-//        options.setBaseCodeSubmissionName(themeName);
-//        JPlag jplag;
-//        JPlagResult result;
-//        List<JPlagComparison> comparisons = null;
-//        try {
-//            jplag = new JPlag(options);
-//            result = jplag.run();
-//        } catch (ExitException e) {
-//            throw new IllegalStateException(e);
-//        }
-//        if (result != null) {
-//            comparisons = result.getComparisons();
-//        }
-//        return comparisons;
-//    }
 
 }

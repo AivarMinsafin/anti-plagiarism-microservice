@@ -15,6 +15,7 @@ import ru.itis.javalab.plagiarism.app.utils.ComparingUtil;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class CompareServiceImpl implements CompareService {
@@ -25,19 +26,34 @@ public class CompareServiceImpl implements CompareService {
     @Autowired
     private TaskRepository taskRep;
 
+    @Autowired
+    private ComparingUtil comparingUtil;
+
     @Override
     public Map<String, String> getSimilarityForStudentWithIdAndThemeId(Long studentId, Long themeId) {
         Student student = studentRep.findById(studentId).orElseThrow(NotFoundException::new);
         Task task = taskRep.findByThemeIdAndStudent_Id(themeId, studentId).orElseThrow(NotFoundException::new);
-        String projectDir = task.getProjectPath();
-//        ComparingUtil comparingUtil = new ComparingUtil(themeName, rootDir);
-//        //List<JPlagComparison> comparisons = comparingUtil.compareList();
-//        Map<String, String> map = new HashMap<>();
-//        for (JPlagComparison c : comparingUtil.getComparisons()) {
-//            if (c.firstSubmission.name.equals(themeName)) {
-//                map.put(c.toString(), Float.toString(c.roundedPercent()));
-//            }
-//        }
-//        return map;
+        String[] projectPathSplit = task.getProjectPath().split("/");
+        StringBuilder projectPathTemplate = new StringBuilder();
+        for (int i = 0; i < projectPathSplit.length - 2; i++) {
+            projectPathTemplate.append(projectPathSplit[i]);
+        }
+        String projectName = projectPathSplit[projectPathSplit.length - 1];
+        Map<String, Task> tasksMap = taskRep.findAllByThemeNameMap(task.getThemeName());
+        List<JPlagComparison> comparisons = comparingUtil.compareList(projectName);
+        Map<String, String> map = new HashMap<>();
+        boolean flag = true;
+        for (JPlagComparison c : comparisons) {
+            if (flag) {
+                flag = false;
+                map.put(student.getId() + " " + student.getFirstName() + " " + student.getLastName() + " " + student.getEmail(), "");
+            }
+            if (c.firstSubmission.name.equals(projectName)) {
+                Student student1 = tasksMap.get(projectPathTemplate + c.secondSubmission.name).getStudent();
+                map.put(student1.getId() + " " +  student1.getFirstName()  + " " + student1.getLastName() + " " + student1.getEmail(),
+                        Float.toString(c.roundedPercent()));
+            }
+        }
+        return map;
     }
 }
