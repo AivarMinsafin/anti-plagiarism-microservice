@@ -13,7 +13,9 @@ import ru.itis.javalab.plagiarism.app.properties.FileStorageProperties;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class ComparingUtil {
@@ -25,8 +27,29 @@ public class ComparingUtil {
         projectStoragePath = Paths.get(fileStorageProperties.getUploadDir().get("project"));
     }
 
-    public List<JPlagComparison> compareList() {
+    public Map<String, String> findSimilarityMap(String studentFirstName, String studentLastName, Long themeId) {
 
+        Path rootDir = this.projectStoragePath.resolve(themeId.toString());
+        String mainProjectName = studentFirstName.concat("_").concat(studentLastName).concat("_").concat(themeId.toString());
+        Map<String, String> result = new HashMap<>();
+        try {
+            JPlagOptions jPlagOptions = new JPlagOptions(rootDir.toString(), LanguageOption.JAVA_1_9);
+            JPlag jPlag = new JPlag(jPlagOptions);
+
+            JPlagResult jPlagResult = jPlag.run();
+            List<JPlagComparison> comparisons = jPlagResult.getComparisons();
+            comparisons.forEach(jPlagComparison -> {
+                if (jPlagComparison.firstSubmission.toString().equals(mainProjectName)){
+                    result.put(jPlagComparison.secondSubmission.toString(), String.valueOf(jPlagComparison.roundedPercent()));
+                }
+                if (jPlagComparison.secondSubmission.toString().equals(mainProjectName)){
+                    result.put(jPlagComparison.firstSubmission.toString(), String.valueOf(jPlagComparison.roundedPercent()));
+                }
+            });
+        } catch (ExitException e) {
+            throw new ComparingUtilException("JPlag problems...", e);
+        }
+        return result;
     }
 
 //    public List<JPlagComparison> compareList() {

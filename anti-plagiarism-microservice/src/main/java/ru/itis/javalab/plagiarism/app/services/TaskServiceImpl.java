@@ -1,6 +1,10 @@
 package ru.itis.javalab.plagiarism.app.services;
 
 import com.google.common.io.Files;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,23 +33,27 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void addTask(AddTaskForm form) {
-        Student student = studentRepository.findById(form.getStudentId()).orElse(null);
+        Student student = studentRepository.findByStudentId(form.getStudentId()).orElse(null);
         if (student == null) {
             student = Student.builder()
                     .email(form.getEmail())
-                    .id(form.getStudentId())
+                    .studentId(form.getStudentId())
                     .firstName(form.getFirstName())
                     .lastName(form.getLastName())
                     .tasks(new ArrayList<>()).build();
+        } else {
+            student.setFirstName(form.getFirstName());
+            student.setLastName(form.getLastName());
+            student.setEmail(form.getEmail());
         }
         Task task = taskRepository.findByThemeIdAndStudent_Id(form.getThemeId(), form.getStudentId()).orElse(null);
         if (task != null) {
             taskRepository.delete(task);
         }
+        PathPair pathPair = storeArchive(form.getArchive(), form.getFirstName(), form.getLastName(), form.getThemeId());
         task = Task.builder()
-                .archivePath(
-                        storeArchive(form.getArchive(), form.getFirstName(), form.getLastName(), form.getThemeId())
-                )
+                .archivePath(pathPair.getArchivePath())
+                .projectPath(pathPair.getProjectPath())
                 .localDateTime(LocalDateTime.now())
                 .themeId(form.getThemeId())
                 .themeName(form.getThemeName())
@@ -55,11 +63,16 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.save(task);
     }
 
-    private String storeArchive(MultipartFile file, String firstName, String lastName, Long themeId){
+    private PathPair storeArchive(MultipartFile file, String firstName, String lastName, Long themeId){
         String path = themeId.toString();
         String fileName = firstName+"_"+lastName+"_"+themeId;
         String fileExt = Files.getFileExtension(file.getOriginalFilename());
         fileStorageUtil.storeArchive(file, path, fileName, fileExt);
-        return Paths.get(path).resolve(fileName+"."+fileExt).toString();
+        String projectPath = Paths.get(String.valueOf(themeId)).resolve(fileName).toString();
+        String archivePath = projectPath.concat("."+fileExt);
+        return PathPair.builder()
+                .archivePath(archivePath)
+                .projectPath(projectPath)
+                .build();
     }
 }
