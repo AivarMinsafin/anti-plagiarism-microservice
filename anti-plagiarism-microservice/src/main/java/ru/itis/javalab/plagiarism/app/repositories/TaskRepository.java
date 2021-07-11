@@ -10,8 +10,5 @@ import java.util.stream.Collectors;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
     Optional<Task> findByThemeIdAndStudent_Id(Long themeId, Long studentId);
-    List<Task> findAllByThemeName(String themeName);
-    default Map<String, Task> findAllByThemeNameMap(String themeName) {
-        return findAllByThemeName(themeName).stream().collect(Collectors.toMap(Task::getProjectPath, v -> v));
-    }
+    Optional<Task> findByProjectPathContaining(String projectPath);
 }

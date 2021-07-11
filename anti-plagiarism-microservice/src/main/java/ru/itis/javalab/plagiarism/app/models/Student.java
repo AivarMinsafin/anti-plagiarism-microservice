@@ -1,10 +1,7 @@
 package ru.itis.javalab.plagiarism.app.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,11 +11,13 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
+@ToString(exclude = "tasks")
 public class Student {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+    private Long studentId;
     private String firstName;
     private String lastName;
     private String email;

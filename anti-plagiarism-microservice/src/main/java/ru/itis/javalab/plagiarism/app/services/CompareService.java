@@ -1,11 +1,7 @@
 package ru.itis.javalab.plagiarism.app.services;
 
-import jplag.JPlagComparison;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-
-import java.util.List;
-import java.util.Map;
+import ru.itis.javalab.plagiarism.app.dto.PlagiarismResultDto;
 
 public interface CompareService {
-    Map<String, String> getSimilarityForStudentWithIdAndThemeId(Long studentId, Long themeId);
+    PlagiarismResultDto getSimilarityForStudentWithIdAndThemeId(Long studentId, Long themeId);
 }
