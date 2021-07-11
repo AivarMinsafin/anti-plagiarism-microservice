@@ -1,10 +1,6 @@
 package ru.itis.javalab.plagiarism.app.services;
 
 import com.google.common.io.Files;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +10,7 @@ import ru.itis.javalab.plagiarism.app.models.Task;
 import ru.itis.javalab.plagiarism.app.repositories.StudentRepository;
 import ru.itis.javalab.plagiarism.app.repositories.TaskRepository;
 import ru.itis.javalab.plagiarism.app.utils.FileStorageUtil;
+import ru.itis.javalab.plagiarism.app.utils.FileStorageUtilImpl;
 
 import java.nio.file.Paths;
 import java.time.LocalDateTime;

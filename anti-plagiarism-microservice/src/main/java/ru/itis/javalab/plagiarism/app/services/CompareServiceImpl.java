@@ -11,11 +11,10 @@ import ru.itis.javalab.plagiarism.app.models.Task;
 import ru.itis.javalab.plagiarism.app.repositories.StudentRepository;
 import ru.itis.javalab.plagiarism.app.repositories.TaskRepository;
 import ru.itis.javalab.plagiarism.app.utils.ComparingUtil;
+import ru.itis.javalab.plagiarism.app.utils.ComparingUtilImpl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class CompareServiceImpl implements CompareService {
