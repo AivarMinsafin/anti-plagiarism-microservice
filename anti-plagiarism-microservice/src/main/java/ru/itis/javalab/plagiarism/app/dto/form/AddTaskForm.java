@@ -18,6 +18,6 @@ public class AddTaskForm {
     private String email;
     private Long themeId;
     private String themeName;
-//    private MultipartFile archive;
+    private MultipartFile archive;
 
 }

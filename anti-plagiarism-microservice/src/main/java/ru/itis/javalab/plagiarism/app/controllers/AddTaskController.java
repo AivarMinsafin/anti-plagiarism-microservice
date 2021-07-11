@@ -15,9 +15,13 @@ public class AddTaskController {
     @Autowired
     private TaskService taskService;
 
-    @PostMapping("/api/plagiarism/addTask")
-    public ResponseEntity<?> saveTask(@RequestBody AddTaskForm form) {
+    @PostMapping(
+            value = "/api/plagiarism/addTask",
+            consumes = "multipart/form-data"
+    )
+    public ResponseEntity<?> saveTask(AddTaskForm form) {
         taskService.addTask(form);
+//        System.out.println(form);
         return ResponseEntity.ok().build();
     }
 
