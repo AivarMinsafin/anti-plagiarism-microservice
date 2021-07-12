@@ -21,7 +21,6 @@ public class AddTaskController {
     )
     public ResponseEntity<?> saveTask(AddTaskForm form) {
         taskService.addTask(form);
-//        System.out.println(form);
         return ResponseEntity.ok().build();
     }
 

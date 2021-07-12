@@ -110,5 +110,4 @@ public class FileStorageUtilImpl implements FileStorageUtil {
             throw new FileStorageException("Extraction problems...", e);
         }
     }
-
 }

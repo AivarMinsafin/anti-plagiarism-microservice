@@ -2,9 +2,13 @@ package ru.itis.javalab.plagiarism.app.services;
 
 import com.google.common.io.Files;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import ru.itis.javalab.plagiarism.app.dto.DownloadResultDto;
 import ru.itis.javalab.plagiarism.app.dto.form.AddTaskForm;
+import ru.itis.javalab.plagiarism.app.dto.form.DownloadArchiveForm;
+import ru.itis.javalab.plagiarism.app.exceptions.NotFoundException;
 import ru.itis.javalab.plagiarism.app.models.Student;
 import ru.itis.javalab.plagiarism.app.models.Task;
 import ru.itis.javalab.plagiarism.app.repositories.StudentRepository;
@@ -71,5 +75,12 @@ public class TaskServiceImpl implements TaskService {
                 .archivePath(archivePath)
                 .projectPath(projectPath)
                 .build();
+    }
+
+    @Override
+    public Resource downloadArchive(DownloadArchiveForm form) {
+        Task task = taskRepository.findByThemeIdAndStudent_Id(form.getThemeId(),
+                form.getStudentId()).orElseThrow(NotFoundException::new);
+        return fileStorageUtil.loadFileAsResource(task.getArchivePath(), "archive");
     }
 }
