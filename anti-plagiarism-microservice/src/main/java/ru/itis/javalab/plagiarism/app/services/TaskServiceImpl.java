@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import ru.itis.javalab.plagiarism.app.dto.DownloadResultDto;
 import ru.itis.javalab.plagiarism.app.dto.form.AddTaskForm;
 import ru.itis.javalab.plagiarism.app.dto.form.DownloadArchiveForm;
 import ru.itis.javalab.plagiarism.app.exceptions.NotFoundException;
@@ -13,8 +12,7 @@ import ru.itis.javalab.plagiarism.app.models.Student;
 import ru.itis.javalab.plagiarism.app.models.Task;
 import ru.itis.javalab.plagiarism.app.repositories.StudentRepository;
 import ru.itis.javalab.plagiarism.app.repositories.TaskRepository;
-import ru.itis.javalab.plagiarism.app.utils.FileStorageUtil;
-import ru.itis.javalab.plagiarism.app.utils.FileStorageUtilImpl;
+import ru.itis.javalab.plagiarism.app.utils.FileStorage.FileStorageUtil;
 
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -51,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
         if (task != null) {
             taskRepository.delete(task);
         }
-        PathPair pathPair = storeArchive(form.getArchive(), form.getFirstName(), form.getLastName(), form.getThemeId());
+        PathPair pathPair = storeArchive(form.getArchive(), form.getFirstName(), form.getLastName(), form.getThemeId(), student.getStudentId());
         task = Task.builder()
                 .archivePath(pathPair.getArchivePath())
                 .projectPath(pathPair.getProjectPath())
@@ -64,9 +62,9 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.save(task);
     }
 
-    private PathPair storeArchive(MultipartFile file, String firstName, String lastName, Long themeId){
+    private PathPair storeArchive(MultipartFile file, String firstName, String lastName, Long themeId, Long studentId) {
         String path = themeId.toString();
-        String fileName = firstName+"_"+lastName+"_"+themeId;
+        String fileName = firstName + "_" + lastName + "_" + studentId + "_" + themeId;
         String fileExt = Files.getFileExtension(file.getOriginalFilename());
         fileStorageUtil.storeArchive(file, path, fileName, fileExt);
         String projectPath = Paths.get(String.valueOf(themeId)).resolve(fileName).toString();

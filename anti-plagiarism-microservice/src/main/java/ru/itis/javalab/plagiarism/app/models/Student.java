@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-@ToString(exclude = "tasks")
+@ToString(exclude = {"tasks", "reports"})
 public class Student {
 
     @Id
@@ -23,6 +23,8 @@ public class Student {
     private String email;
     @OneToMany(mappedBy = "student")
     private List<Task> tasks;
+    @OneToMany(mappedBy = "student")
+    private List<Report> reports;
 //    private List<Report> reports;
 
 }

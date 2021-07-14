@@ -1,4 +1,4 @@
-package ru.itis.javalab.plagiarism.app.utils;
+package ru.itis.javalab.plagiarism.app.utils.FileStorage;
 
 public class StorageFileNotFoundException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package ru.itis.javalab.plagiarism.app.dto;
+package ru.itis.javalab.plagiarism.app.dto.form;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,12 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SuspectStudentDto {
-
+public class CodePlagiarismGetResultForm {
     private Long studentId;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String path;
-
+    private Long themeId;
 }

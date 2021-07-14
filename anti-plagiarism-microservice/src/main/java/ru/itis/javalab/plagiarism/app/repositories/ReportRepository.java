@@ -7,8 +7,7 @@ import ru.itis.javalab.plagiarism.app.models.Task;
 
 import java.util.Optional;
 
-public interface StudentRepository extends JpaRepository<Student, Long> {
-    Optional<Student> findByStudentId(Long studentId);
-    Optional<Student> findByTasksContains(Task task);
-    Optional<Student> findByReportsContains(Report report);
+public interface ReportRepository extends JpaRepository<Report, Long> {
+    Optional<Report> findByCourseIdAndStudent_Id(Long courseId, Long studentId);
+    Optional<Report> findByReportPathContaining(String projectPath);
 }

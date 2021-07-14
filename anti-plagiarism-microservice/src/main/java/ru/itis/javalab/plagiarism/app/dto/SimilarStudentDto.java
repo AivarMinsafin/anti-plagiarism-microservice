@@ -15,7 +15,7 @@ public class SimilarStudentDto {
     private String firstName;
     private String lastName;
     private String email;
-    private String archivePath;
+    private String path;
     private String similarityPercent;
 
 }

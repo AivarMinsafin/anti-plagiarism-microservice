@@ -1,4 +1,4 @@
-package ru.itis.javalab.plagiarism.app.utils;
+package ru.itis.javalab.plagiarism.app.utils.FileStorage;
 
 import java.io.IOException;
 

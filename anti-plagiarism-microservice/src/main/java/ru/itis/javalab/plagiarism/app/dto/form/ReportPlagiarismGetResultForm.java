@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GetResultForm {
+public class ReportPlagiarismGetResultForm {
     private Long studentId;
-    private Long themeId;
+    private Long courseId;
 }

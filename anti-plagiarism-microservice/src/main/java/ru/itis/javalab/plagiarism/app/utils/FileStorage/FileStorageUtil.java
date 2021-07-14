@@ -1,4 +1,4 @@
-package ru.itis.javalab.plagiarism.app.utils;
+package ru.itis.javalab.plagiarism.app.utils.FileStorage;
 
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
