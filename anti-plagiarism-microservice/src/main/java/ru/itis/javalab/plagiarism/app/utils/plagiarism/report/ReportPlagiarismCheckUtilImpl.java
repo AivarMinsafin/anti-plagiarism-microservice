@@ -98,16 +98,19 @@ public class ReportPlagiarismCheckUtilImpl implements ReportPlagiarismCheckUtil 
                     .filter(Files::isRegularFile)
                     .map(Path::toFile)
                     .collect(Collectors.toList());
+            if (filesInFolder.size() < 2){
+                return new HashMap<>();
+            }
             DocumentVector mainDocVector = getMainDocumentVector(filesInFolder, mainReportName);
             for (File e : filesInFolder) {
                 if (e.getName().contains(mainReportName)) {
                     continue;
                 }
-                double percent = getSimilarityOfTwoDocuments(mainDocVector, e);
-                resultMap.put(e.getName(), String.valueOf(percent));
+                double percent = getSimilarityOfTwoDocuments(mainDocVector, e)*100;
+                resultMap.put(e.getName(), String.format("%.2f", percent));
             }
         } catch (IOException e) {
-            throw new IllegalArgumentException(e);
+            throw new ReportPlagiarismCheckUtilException(e);
         }
         return resultMap;
     }

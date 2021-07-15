@@ -47,7 +47,7 @@ public class ReportServiceImpl implements ReportService {
             student.setEmail(form.getEmail());
         }
         Report report = reportRepository.findByCourseIdAndStudent_Id(form.getCourseId(),
-                form.getStudentId()).orElseThrow(null);
+                form.getStudentId()).orElse(null);
         if (report != null) {
             reportRepository.delete(report);
         }

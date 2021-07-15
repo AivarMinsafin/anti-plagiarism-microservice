@@ -15,7 +15,7 @@ public class CodePlagiarismCheckController {
     @Autowired
     private CodePlagiarismCheckService codePlagiarismCheckService;
 
-    @GetMapping("/api/plagiarism/check/tasks")
+    @GetMapping("/api/plagiarism/check/task")
     public ResponseEntity<PlagiarismResultDto> getResultOfTaskCheck(@RequestBody CodePlagiarismGetResultForm form) {
         return ResponseEntity.ok(codePlagiarismCheckService.getSimilarityForStudentWithIdAndThemeId(form.getStudentId(), form.getThemeId()));
     }

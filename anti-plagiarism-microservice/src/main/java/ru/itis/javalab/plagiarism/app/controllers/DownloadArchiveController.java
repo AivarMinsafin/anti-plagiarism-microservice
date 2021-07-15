@@ -28,7 +28,7 @@ public class DownloadArchiveController {
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException ex) {
-            throw new IllegalArgumentException(ex);
+            return ResponseEntity.notFound().build();
         }
         if(contentType == null) {
             contentType = "application/octet-stream";

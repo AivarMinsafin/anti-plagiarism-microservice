@@ -16,7 +16,7 @@ public class ReportPlagiarismCheckController {
     @Autowired
     private ReportPlagiarismCheckService reportPlagiarismCheckService;
 
-    @GetMapping("/api/plagiarism/check/reports")
+    @GetMapping("/api/plagiarism/check/report")
     public ResponseEntity<PlagiarismResultDto> getResultOfReportCheck(@RequestBody ReportPlagiarismGetResultForm form) {
         return ResponseEntity.ok(reportPlagiarismCheckService.getSimilarityForStudentWithIdAndCourseId(
                 form.getStudentId(), form.getCourseId()));

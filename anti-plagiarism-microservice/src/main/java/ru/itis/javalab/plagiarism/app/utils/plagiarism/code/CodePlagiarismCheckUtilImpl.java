@@ -31,7 +31,7 @@ public class CodePlagiarismCheckUtilImpl implements CodePlagiarismCheckUtil {
 
         Path rootDir = this.projectStoragePath.resolve(themeId.toString());
         String mainProjectName = studentFirstName.concat("_").concat(studentLastName).concat("_")
-                .concat(studentId.toString()).concat(themeId.toString());
+                .concat(studentId.toString()).concat("_").concat(themeId.toString());
         Map<String, String> result = new HashMap<>();
         try {
             JPlagOptions jPlagOptions = new JPlagOptions(rootDir.toString(), LanguageOption.JAVA_1_9);
