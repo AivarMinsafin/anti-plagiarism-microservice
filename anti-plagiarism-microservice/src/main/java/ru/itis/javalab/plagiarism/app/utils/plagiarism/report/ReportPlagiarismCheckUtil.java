@@ -1,4 +1,4 @@
-package ru.itis.javalab.plagiarism.app.utils.ReportsPlagiarism;
+package ru.itis.javalab.plagiarism.app.utils.plagiarism.report;
 
 import java.util.Map;
 

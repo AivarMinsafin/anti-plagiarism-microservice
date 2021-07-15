@@ -10,7 +10,7 @@ import ru.itis.javalab.plagiarism.app.models.Student;
 import ru.itis.javalab.plagiarism.app.models.Task;
 import ru.itis.javalab.plagiarism.app.repositories.StudentRepository;
 import ru.itis.javalab.plagiarism.app.repositories.TaskRepository;
-import ru.itis.javalab.plagiarism.app.utils.CodePlagiarism.CodePlagiarismCheckUtil;
+import ru.itis.javalab.plagiarism.app.utils.plagiarism.code.CodePlagiarismCheckUtil;
 
 import java.util.ArrayList;
 import java.util.Map;

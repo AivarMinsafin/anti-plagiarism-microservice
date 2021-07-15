@@ -1,4 +1,4 @@
-package ru.itis.javalab.plagiarism.app.utils.CodePlagiarism;
+package ru.itis.javalab.plagiarism.app.utils.plagiarism.code;
 
 import jplag.ExitException;
 import jplag.JPlag;
@@ -9,7 +9,6 @@ import jplag.options.LanguageOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.itis.javalab.plagiarism.app.properties.FileStorageProperties;
-import ru.itis.javalab.plagiarism.app.utils.CodePlagiarism.CodePlagiarismCheckUtil;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

@@ -12,7 +12,7 @@ import ru.itis.javalab.plagiarism.app.models.Student;
 import ru.itis.javalab.plagiarism.app.models.Task;
 import ru.itis.javalab.plagiarism.app.repositories.StudentRepository;
 import ru.itis.javalab.plagiarism.app.repositories.TaskRepository;
-import ru.itis.javalab.plagiarism.app.utils.FileStorage.FileStorageUtil;
+import ru.itis.javalab.plagiarism.app.utils.storage.file.FileStorageUtil;
 
 import java.nio.file.Paths;
 import java.time.LocalDateTime;

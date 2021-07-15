@@ -1,4 +1,4 @@
-package ru.itis.javalab.plagiarism.app.utils.FileStorage;
+package ru.itis.javalab.plagiarism.app.utils.storage.file;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;

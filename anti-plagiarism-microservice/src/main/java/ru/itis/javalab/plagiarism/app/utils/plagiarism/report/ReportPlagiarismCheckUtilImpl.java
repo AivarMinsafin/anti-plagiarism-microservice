@@ -1,4 +1,4 @@
-package ru.itis.javalab.plagiarism.app.utils.ReportsPlagiarism;
+package ru.itis.javalab.plagiarism.app.utils.plagiarism.report;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
