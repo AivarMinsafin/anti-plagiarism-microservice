@@ -61,9 +61,12 @@ public class FileStorageUtilImpl implements FileStorageUtil {
     }
 
     @Override
-    public String storeReport(MultipartFile file, String fileName) {
+    public String storeReport(MultipartFile file, String path, String fileName, String fileExt) {
         try {
-            Path targetPath = this.reportStoragePath.resolve(fileName);
+            Path targetPath = this.reportStoragePath.resolve(path).resolve(fileName + "." + fileExt);
+            if (!Files.exists(targetPath.getParent())){
+                Files.createDirectories(targetPath.getParent());
+            }
             Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new FileStorageException("Could not store file "+fileName+". Please try again", e);

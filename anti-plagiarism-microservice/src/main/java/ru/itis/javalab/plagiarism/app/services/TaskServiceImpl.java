@@ -39,7 +39,8 @@ public class TaskServiceImpl implements TaskService {
                     .studentId(form.getStudentId())
                     .firstName(form.getFirstName())
                     .lastName(form.getLastName())
-                    .tasks(new ArrayList<>()).build();
+                    .tasks(new ArrayList<>())
+                    .reports(new ArrayList<>()).build();
         } else {
             student.setFirstName(form.getFirstName());
             student.setLastName(form.getLastName());
